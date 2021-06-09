@@ -101,6 +101,56 @@ public class ShoppingCartTest {
         assertEquals(1, shoppingCardProducts.size());
     }
 
+    //////
+    @Test
+    public void deleteOneProductFromShoppingCart_whenAddedOnce_decreasesSizeZero() {
+        final ShoppingCart shoppingCart = new ShoppingCart();
+        final Product prod1 = new Product("prod1", 2.5);
+        shoppingCart.addProduct(prod1);
+        final Map<Product, Long> shoppingCardProducts = shoppingCart.deleteProduct(prod1);
+        assertEquals(0, shoppingCardProducts.size());
+    }
+
+    @Test
+    public void deleteTwoProductsFromShoppingCart_whenAddedOncePerProduct_decreasesSizeZero() {
+        final ShoppingCart shoppingCart = new ShoppingCart();
+        final Product prod1 = new Product("prod1", 2.5);
+        final Product prod2 = new Product("prod2", 9);
+        shoppingCart.addProduct(prod1);
+        shoppingCart.addProduct(prod2);
+        shoppingCart.removeProduct(prod1);
+        final Map<Product, Long> shoppingCardProducts = shoppingCart.deleteProduct(prod2);
+        assertEquals(0, shoppingCardProducts.size());
+    }
+
+    @Test
+    public void deleteProductFromEmptyShoppingCart_sizeRemainsTheSame() {
+        final ShoppingCart shoppingCart = new ShoppingCart();
+        final Product prod1 = new Product("prod1", 2.5);
+        final Map<Product, Long> shoppingCardProducts = shoppingCart.deleteProduct(prod1);
+        assertEquals(0, shoppingCardProducts.size());
+    }
+
+    @Test
+    public void deleteNonExistingProductFromShoppingCart_sizeRemainsTheSame() {
+        final ShoppingCart shoppingCart = new ShoppingCart();
+        final Product prod1 = new Product("prod1", 2.5);
+        final Product prod2 = new Product("prod2", 9);
+        shoppingCart.addProduct(prod1);
+        final Map<Product, Long> shoppingCardProducts = shoppingCart.removeProduct(prod2);
+        assertEquals(1, shoppingCardProducts.size());
+    }
+
+    @Test
+    public void deleteProductFromShoppingCart_whenAddedMulitpleTime_sizeRemainsTheSame() {
+        final ShoppingCart shoppingCart = new ShoppingCart();
+        final Product prod1 = new Product("prod1", 2.5);
+        shoppingCart.addProduct(prod1);
+        shoppingCart.addProduct(prod1);
+        final Map<Product, Long> shoppingCardProducts = shoppingCart.deleteProduct(prod1);
+        assertEquals(0, shoppingCardProducts.size());
+    }
+
     @Test
     public void calculateTotalOnEmptyShoppingCard_shouldBeZero_NormalCard() {
         final ShoppingCart shoppingCart = new ShoppingCart();

@@ -27,6 +27,11 @@ public class ShoppingCart {
         return getProducts();
     }
 
+    public Map<Product, Long> deleteProduct(final Product product) {
+        products.removeIf(p -> p.equals(product));
+        return getProducts();
+    }
+
     /**
      * Function will create and return a map of grouped records by product.
      * Map will contain product as key and counter of value.
